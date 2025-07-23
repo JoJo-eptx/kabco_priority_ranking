@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from typing import Callable, Dict, List
 
 
 def sum_weights(weights: dict):
@@ -7,7 +8,7 @@ def sum_weights(weights: dict):
         weights.get('injury_fatal') + weights.get('injury_serious') + weights.get('injury_minor') + weights.get('injury_possible') + weights.get('injury_none')
     )
 
-def compute_index_value(weights: dict) -> callable:
+def compute_index_value(weights: Dict, special_parks: List, special_weight_factor: float) -> Callable:
     def demographics_score(df: pd.DataFrame) -> pd.Series:
         return weights.get('demographics') * (-df['z_score_median_income'] + df['z_score_pct_no_vehicle']) / 2
 
